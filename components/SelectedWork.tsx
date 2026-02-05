@@ -215,26 +215,28 @@ function DeviceStackHero({
             />
           </div>
         </motion.div>
-        <motion.div
-          className="relative flex-shrink-0 flex items-end justify-center max-md:min-w-[500px]"
-          style={{
-            width: 'clamp(320px, 48vw, 700px)',
-            height: 'min(100%, 76vh)',
-            zIndex: 1,
-            y: desktopY,
-            marginLeft: 'calc(clamp(-32px, -6vw, -64px) - 80px)',
-          }}
-        >
-          <Image
-            src={PROCORE_DEVICE_IMAGES.desktop}
-            alt="Procore on desktop"
-            width={700}
-            height={441}
-            className="object-contain object-bottom w-full h-full"
-            sizes="1400px"
-            quality={95}
-          />
-        </motion.div>
+        <div className="max-[480px]:-ml-[90px]">
+          <motion.div
+            className="relative flex-shrink-0 flex items-end justify-center max-md:min-w-[500px]"
+            style={{
+              width: 'clamp(320px, 48vw, 700px)',
+              height: 'min(100%, 76vh)',
+              zIndex: 1,
+              y: desktopY,
+              marginLeft: 'calc(clamp(-32px, -6vw, -64px) - 80px)',
+            }}
+          >
+            <Image
+              src={PROCORE_DEVICE_IMAGES.desktop}
+              alt="Procore on desktop"
+              width={700}
+              height={441}
+              className="object-contain object-bottom w-full h-full"
+              sizes="1400px"
+              quality={95}
+            />
+          </motion.div>
+        </div>
         <motion.div
           className="relative flex-shrink-0 flex items-end justify-center max-md:hidden"
           style={{
