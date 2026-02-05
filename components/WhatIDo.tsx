@@ -25,7 +25,7 @@ export default function WhatIDo() {
 
   return (
     <motion.section
-      className="px-6 md:px-12 lg:px-24 py-32"
+      className="px-6 md:px-12 lg:px-24 py-24"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}

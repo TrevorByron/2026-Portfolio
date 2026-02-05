@@ -28,7 +28,7 @@ export default function WaysToWork() {
   return (
     <motion.section
       id="how-i-work"
-      className="px-6 md:px-12 lg:px-24 py-32"
+      className="px-6 md:px-12 lg:px-24 py-24"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -40,7 +40,7 @@ export default function WaysToWork() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.9 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="text-lg font-bold mb-20 text-left font-mono text-gray-500"
+          className="text-lg font-bold mb-4 text-left font-mono text-gray-500"
         >
           TWO STYLES OF WORKING TOGETHER
         </motion.h4>
@@ -61,8 +61,8 @@ export default function WaysToWork() {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <h3
-                  className="font-semibold font-mono flex items-center gap-3 transition-colors duration-300"
-                  style={{ color: isHovered ? model.hoverColor : '#e5e5e5' }}
+                  className="font-black font-mono flex items-center gap-3 transition-colors duration-300"
+                  style={{ color: isHovered ? model.hoverColor : '#e5e5e5', fontWeight: 900 }}
                 >
                   <Icon
                     className="shrink-0 transition-colors duration-300"

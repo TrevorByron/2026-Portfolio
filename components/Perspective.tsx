@@ -12,7 +12,7 @@ const statements = [
 export default function Perspective() {
   return (
     <motion.section
-      className="px-6 md:px-12 lg:px-24 py-32 bg-dark-gray"
+      className="px-6 md:px-12 lg:px-24 py-24 bg-dark-gray"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}

@@ -6,7 +6,7 @@ import { Linkedin } from 'lucide-react'
 export default function CallToAction() {
   return (
     <>
-    <section id="contact" className="px-6 md:px-12 lg:px-24 py-32">
+    <section id="contact" className="px-6 md:px-12 lg:px-24 py-24">
       <div className="max-w-6xl mx-auto">
       <div className="flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-16">
       <div className="text-left flex-shrink-0 w-full">
@@ -58,7 +58,7 @@ export default function CallToAction() {
       </div>
       </div>
     </section>
-    <footer className="w-full px-6 md:px-12 lg:px-24 py-24 flex justify-center items-center">
+    <footer className="w-full px-6 md:px-12 lg:px-24 py-20 flex justify-center items-center">
       <span
         className="font-mono font-bold select-none"
         style={{

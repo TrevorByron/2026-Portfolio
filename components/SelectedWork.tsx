@@ -193,14 +193,14 @@ export default function SelectedWork() {
   const evenColumnX = useTransform([evenX, rowX], ([ex, rx]: number[]) => ex + rx)
 
   return (
-    <section id="recent-work" className="px-6 md:px-12 lg:px-24 py-32 bg-black">
+    <section id="recent-work" className="px-6 md:px-12 lg:px-24 py-24 bg-black">
       <div className="max-w-6xl mx-auto mb-20">
         <motion.h4
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.9 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="text-lg font-bold mb-20 text-left font-mono uppercase text-gray-500"
+          className="text-lg font-bold mb-4 text-left font-mono uppercase text-gray-500"
         >
           Recent Work
         </motion.h4>
@@ -221,7 +221,10 @@ export default function SelectedWork() {
             className={`max-w-6xl mx-auto mb-8 ${item.title === 'Toro TMS' ? 'grid grid-cols-1 lg:grid-cols-[2fr,minmax(340px,1fr)] gap-8 lg:gap-12 items-start' : ''}`}
           >
             <div>
-              <h3 className="font-semibold font-mono mb-4">
+              <h3
+                className="font-semibold font-mono mb-4"
+                style={{ fontSize: '40px' }}
+              >
                 {item.title}
               </h3>
               {'workStyle' in item && item.workStyle && (() => {
