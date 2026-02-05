@@ -210,7 +210,7 @@ function DeviceStackHero({
             aria-hidden
           >
             <div
-              className="w-[90px] h-[120px] lg:h-[175px] bg-red-500 shrink-0"
+              className="w-[90px] h-[120px] lg:h-[175px] bg-[#000000] shrink-0"
               style={{ boxShadow: '70px 0px 50px 40px rgba(0, 0, 0, 0.5)' }}
             />
           </div>
@@ -262,7 +262,7 @@ function DeviceStackHero({
             aria-hidden
           >
             <div
-              className="w-[90px] h-[120px] lg:h-[175px] bg-red-500 shrink-0"
+              className="w-[90px] h-[120px] lg:h-[175px] bg-[#000000] shrink-0"
               style={{ boxShadow: '-130px 0px 50px 40px rgba(0, 0, 0, 0.5)' }}
             />
           </div>
@@ -294,7 +294,7 @@ function DeviceStackHero({
             aria-hidden
           >
             <div
-              className="w-[90px] h-[120px] lg:h-[175px] bg-red-500 shrink-0"
+              className="w-[90px] h-[120px] lg:h-[175px] bg-[#000000] shrink-0"
               style={{ boxShadow: '3px 0px 30px 40px rgba(0, 0, 0, 0.5)' }}
             />
           </div>
