@@ -166,21 +166,21 @@ function DeviceStackHero({
   // Parallax: base row motion; each device has different amplitude = different "depth" speed
   const y = useTransform(scrollYProgress, [0, 0.5, 1], [112, 0, -112])
   // Desktop (behind): scrolls slowest — minimal amplitude
-  const desktopY = useTransform(scrollYProgress, (v) => (0.5 - v) * 6) // ±3px
+  const desktopY = useTransform(scrollYProgress, (v) => (0.5 - v) * 18) // ±9px
   // iPad & Laptop: same speed (middle layer)
-  const ipadY = useTransform(scrollYProgress, (v) => (0.5 - v) * 90) // ±45px
-  const laptopY = useTransform(scrollYProgress, (v) => (0.5 - v) * 90)
+  const ipadY = useTransform(scrollYProgress, (v) => (0.5 - v) * 270) // ±135px
+  const laptopY = useTransform(scrollYProgress, (v) => (0.5 - v) * 270)
   // Phone (front): scrolls fastest — largest amplitude
-  const phoneY = useTransform(scrollYProgress, (v) => (0.5 - v) * 250) // ±125px
+  const phoneY = useTransform(scrollYProgress, (v) => (0.5 - v) * 750) // ±375px
 
   return (
     <div
       ref={containerRef}
-      className="w-screen max-w-none ml-[calc(50%-50vw)] aspect-[16/9] md:aspect-[21/9] bg-dark box-content flex items-center justify-center overflow-hidden transition-colors duration-300"
+      className="w-screen max-w-none ml-[calc(50%-50vw)] aspect-[16/9] md:aspect-[21/9] bg-dark box-content flex items-center justify-center overflow-visible transition-colors duration-300"
       style={{ minHeight: 'min(420px, 50vh)' }}
     >
       <motion.div
-        className="w-full h-full flex items-end justify-start gap-0 px-5 md:px-10 min-[1550px]:pl-[70px] min-[1620px]:pl-[120px]"
+        className="w-full h-full flex items-end justify-start gap-0 px-5 md:px-10 min-[1550px]:pl-[70px] min-[1620px]:pl-[120px] overflow-visible"
         style={{ y }}
       >
         {/* Left→right: iPad (back), Desktop, Laptop, Phone (front). Reference: iPad behind desktop; desktop largest; laptop base lower; phone elevated. */}
