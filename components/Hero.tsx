@@ -32,7 +32,7 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-xl md:text-2xl lg:text-3xl font-semibold text-muted-gray mb-12 text-balance font-mono"
         >
-          I build real, coded prototypes and help teams validate ideas faster—blurring the line between design and engineering so teams ship with confidence.
+          I'm a freelance designer with a particular love for prototyping in code. I bring vague concepts to life and confidence to validation cycles. I'm happy you're here.
         </motion.h2>
         
         <motion.p
@@ -42,7 +42,7 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
           className="text-lg md:text-xl text-muted-gray mb-16 max-w-2xl leading-relaxed text-balance"
         >
-          I believe the future of product teams is one where designers ship code and engineers design experiences. Static mockups are great for exploration, but real learning happens when something behaves like the real thing. I work with founders and product leaders to make that happen—quickly and efficiently.
+          Designing on the web since the early 2000s, I bring over a decade of experience partnering with founders and product leaders at companies ranging from early pre-funding startups to multi-billion-dollar organizations. See a few of my recent projects below.
         </motion.p>
         
         <motion.div
@@ -52,21 +52,6 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           className="flex flex-col sm:flex-row gap-4 justify-start items-start"
         >
-          <a
-            href="#contact"
-            className="min-w-[193px] min-h-[56px] inline-flex items-center justify-center px-8 py-4 border-2 border-transparent bg-light-gray text-dark font-medium rounded-sm hover:bg-white transition-all duration-200"
-            style={{
-              boxShadow: '0 0 0 rgba(162, 89, 255, 0)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 0 30px rgba(162, 89, 255, 0.4)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 0 0 rgba(162, 89, 255, 0)'
-            }}
-          >
-            Start a prototype
-          </a>
           <a
             href="#recent-work"
             className="min-w-[193px] min-h-[56px] inline-flex items-center justify-center px-8 py-4 border-2 border-muted-gray text-light-gray font-medium rounded-sm transition-all duration-200"

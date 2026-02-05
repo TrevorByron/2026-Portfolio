@@ -45,7 +45,7 @@ export default function Header() {
             </a>
           ))}
           <a
-            href="https://www.linkedin.com/in/trevor-byron"
+            href="https://www.linkedin.com/in/trevor-byron/"
             target="_blank"
             rel="noopener noreferrer"
             className="ml-1 rounded p-2 text-muted-gray transition-colors hover:bg-white/10 hover:text-light-gray"

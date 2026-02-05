@@ -248,22 +248,30 @@ export default function SelectedWork() {
                   href={item.prototypeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block mt-6 px-5 py-2.5 font-mono text-sm font-medium border border-gray-500 text-light-gray hover:border-white hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center justify-center mt-6 px-8 py-4 border-2 border-transparent bg-light-gray text-dark font-medium rounded-sm hover:bg-white transition-all duration-200"
                 >
                   View Prototype
                 </a>
               )}
             </div>
             {item.title === 'Toro TMS' && (
-              <div className="relative w-full aspect-[4/3] min-h-[200px] sm:min-h-[280px] rounded-lg overflow-visible bg-dark-gray shrink-0 lg:mr-[-40px] pt- pl-3">
-                <div className="absolute inset-0 scale-100 sm:scale-125 md:scale-[2] lg:scale-[2] origin-top-left">
+              <div className="relative w-full aspect-[4/3] h-full sm:min-h-[280px] rounded-lg overflow-hidden lg:overflow-visible bg-dark-gray shrink-0 lg:mr-[-40px] pt-3 pl-3">
+                <div
+                  className="absolute inset-0 lg:inset-auto lg:left-0 lg:top-1/2 lg:-translate-y-1/2 lg:right-auto lg:bottom-auto lg:w-[700px] lg:h-full"
+                  style={{
+                    maskImage:
+                      'radial-gradient(circle at 0% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 30%, rgba(255,255,255,0.3) 65%, rgba(255,255,255,0) 100%)',
+                    WebkitMaskImage:
+                      'radial-gradient(circle at 0% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 30%, rgba(255,255,255,0.3) 65%, rgba(255,255,255,0) 100%)',
+                  }}
+                >
                   <Image
                     src="/Toro-TMS.png?v=2"
                     alt="Toro TMS Embedded Design — dispatch dashboard and recurring event mobile experience"
                     fill
-                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 700px, 100vw"
                     quality={90}
-                    className="object-cover object-center"
+                    className="object-cover object-left"
                   />
                 </div>
               </div>
@@ -278,7 +286,7 @@ export default function SelectedWork() {
             >
               <div className="relative w-full min-h-[calc(979px/0.85+124px)] flex items-center justify-center overflow-hidden">
                 <div
-                  className="absolute inset-0 pt-[24px] pb-[100px]"
+                  className="absolute inset-0 pt-[24px] pb-[100px] min-[1700px]:translate-x-[calc(42vw-716px)]"
                   style={{
                     maskImage: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 100%)',
                     WebkitMaskImage: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 100%)',
@@ -372,6 +380,21 @@ export default function SelectedWork() {
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
                   >
                     <img src="/user-flow-phone-12.png" alt="Get Sh!t Done dark mode new task" className="w-full h-full object-cover object-top" />
+                  </div>
+                </motion.div>
+                {/* Column 7 container — odd: New Project (light + dark) */}
+                <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 1452px)', top: '5%', zIndex: 0, rotate: -6.5, x: oddColumnX, y: oddY }}>
+                  <div
+                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
+                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
+                  >
+                    <img src="/user-flow-new-project-top.png" alt="Get Sh!t Done New Project screen (light)" className="w-full h-full object-cover object-top" />
+                  </div>
+                  <div
+                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
+                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
+                  >
+                    <img src="/user-flow-new-project-bottom.png" alt="Get Sh!t Done New Project screen (dark)" className="w-full h-full object-cover object-top" />
                   </div>
                 </motion.div>
                 {/* Gradient overlay - fades bottom row into black */}

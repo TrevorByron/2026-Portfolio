@@ -9,13 +9,13 @@ const FIGMA_BLUE = '#0AC8FA'
 
 const models = [
   {
-    title: 'Strike Team Engagement',
+    title: 'Strike Team',
     description: 'Fast, focused, non-disruptive. I partner with founders, CEOs, and product leaders to rapidly build prototypes that validate ideas and bring clarity—without slowing down your existing teams. I come in focused, deliver fast, and can either hand off clean deliverables or stay on to help move them toward production.',
     Icon: Zap,
     hoverColor: FIGMA_GREEN,
   },
   {
-    title: 'Embedded Design Engineer',
+    title: 'Embedded Designer',
     description: 'Temporary team expansion—without a full-time hire. Sometimes what a team really needs is extra firepower for a few months. I embed with your product team to augment capacity, inject design-engineering thinking into workflows, and ensure front-end and prototype work level up.',
     Icon: PenTool,
     hoverColor: FIGMA_BLUE,
