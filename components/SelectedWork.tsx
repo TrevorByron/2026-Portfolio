@@ -79,7 +79,24 @@ const workItems = [
   {
     title: 'Procore Construction Network',
     workStyle: 'embedded' as const,
-    description: 'As the principal designer, I led discovery, vision casting, and internal alignment for the Procore Construction Network—a free online business directory that connects general contractors, specialty contractors, owners, architects, and vendors on one platform. I used the RITE research method and prototyped the first version in full HTML and CSS, so I could quickly iterate on designs immediately after collecting feedback from users—one of the clear benefits of prototyping in code. As the designer I owned the final polish of what was actually shipped—I rolled up my sleeves and made the changes to the actual repo. The project launched in 2021 and I oversaw front-end implementation to ensure design quality and mobile-friendly experiences.',
+    description: (
+      <>
+        As the principal designer, I led discovery, vision casting, and internal alignment for the{' '}
+        <a
+          href="https://network.procore.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-figma-blue hover:underline"
+        >
+          Procore Construction Network
+        </a>
+        —a free online business directory that connects general contractors, specialty contractors, owners, architects, and vendors on one platform.
+        <br /><br />
+        I used the RITE research method and prototyped the first version in full HTML and CSS, so I could quickly iterate on designs immediately after collecting feedback from users.
+        <br /><br />
+        As the designer I owned the final polish of what was actually shipped—I rolled up my sleeves and made the changes to the actual repo. The project launched in 2021 and I oversaw front-end implementation to ensure design quality and mobile-friendly experiences.
+      </>
+    ),
     link: '#',
     prototypeUrl: 'https://trevorborden.github.io/GCN-prototype/index.html',
     image: PCN_IMAGE,
