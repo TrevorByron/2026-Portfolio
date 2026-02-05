@@ -13,10 +13,10 @@ export default function Perspective() {
   return (
     <motion.section
       className="px-6 md:px-12 lg:px-24 py-24 bg-dark-gray"
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0.4, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       <div className="max-w-6xl mx-auto">
         <motion.div className="space-y-12">
@@ -31,10 +31,10 @@ export default function Perspective() {
             return (
               <motion.p
                 key={index}
-                initial={{ opacity: 0, x: -24 }}
+                initial={{ opacity: 0.3, x: -12 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.08 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.35, ease: 'easeOut', delay: index * 0.04 }}
                 className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-relaxed text-balance font-mono pl-6 border-l-2 border-transparent transition-colors duration-300"
                 style={{
                   borderLeftColor: 'transparent',

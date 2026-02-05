@@ -196,10 +196,10 @@ export default function SelectedWork() {
     <section id="recent-work" className="px-6 md:px-12 lg:px-24 py-24 bg-black">
       <div className="max-w-6xl mx-auto mb-20">
         <motion.h4
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0.4, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.9 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="text-lg font-bold mb-4 text-left font-mono uppercase text-gray-500"
         >
           Recent Work
@@ -210,11 +210,11 @@ export default function SelectedWork() {
         <motion.article
           key={item.title}
           ref={item.title === 'Get Sh!t Done' ? userFlowRef : undefined}
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0.3, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.05 }}
-          className="mb-[30vh] last:mb-0"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.4, ease: 'easeOut', delay: index * 0.02 }}
+          className="mb-[24vh] last:mb-0"
         >
           {/* Content: header + paragraph (Toro TMS = two-column with image on right) */}
           <div

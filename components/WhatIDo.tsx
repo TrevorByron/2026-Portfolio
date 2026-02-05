@@ -26,10 +26,10 @@ export default function WhatIDo() {
   return (
     <motion.section
       className="px-6 md:px-12 lg:px-24 py-24"
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0.4, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       <div className="max-w-6xl mx-auto">
         <motion.h4
@@ -46,10 +46,10 @@ export default function WhatIDo() {
           {items.map((item, index) => (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0.3, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.08 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.35, ease: 'easeOut', delay: index * 0.04 }}
               className="space-y-4 relative"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}

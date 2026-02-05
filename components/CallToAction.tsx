@@ -11,10 +11,10 @@ export default function CallToAction() {
       <div className="flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-16">
       <div className="text-left flex-shrink-0 w-full">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0.4, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="text-left mb-16"
         >
           <div className="flex flex-col sm:flex-row items-stretch gap-6">
