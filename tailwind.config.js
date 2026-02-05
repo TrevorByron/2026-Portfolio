@@ -17,7 +17,7 @@ module.exports = {
         'muted-gray': '#999999',
         accent: '#6b7280',
         figma: {
-          red: '#F24E1E',
+          red: '#FF001D',
           orange: '#FC7431',
           purple: '#A259FF',
           blue: '#0AC8FA',

@@ -40,9 +40,18 @@ export default function Hero() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.8 }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+          className="text-lg md:text-xl text-muted-gray mb-4 max-w-2xl leading-relaxed text-balance"
+        >
+          Too many of the best product ideas stall before they're ever tested—stuck in someone's head or buried in slides.
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
           className="text-lg md:text-xl text-muted-gray mb-16 max-w-2xl leading-relaxed text-balance"
         >
-          Designing on the web since the early 2000s, I bring over a decade of experience partnering with founders and product leaders at companies ranging from early pre-funding startups to multi-billion-dollar organizations. See a few of my recent projects below.
+          I use rapid, coded prototyping to bring these ideas to life. Leveraging AI-driven tools, I'm able to move quickly and efficiently. Years of partnering closely with founders and product leaders have shaped how I bring fuzzy ideas into the hands of real humans.
         </motion.p>
         
         <motion.div

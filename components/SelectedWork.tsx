@@ -86,7 +86,7 @@ const workItems = [
           href="https://network.procore.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-figma-blue hover:underline"
+          className="text-figma-purple hover:underline"
         >
           Procore Construction Network
         </a>
