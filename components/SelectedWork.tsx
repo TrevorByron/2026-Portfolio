@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, type RefObject } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Zap, PenTool } from 'lucide-react'
@@ -144,6 +144,166 @@ const UP_X = Math.sin((-6.5 * Math.PI) / 180)   // ≈ -0.1132
 const UP_Y = -Math.cos((6.5 * Math.PI) / 180)   // ≈ -0.994
 const OFFSET = 80 // px along the tilted axis at end; start is 0
 
+// Procore device stack: four images laid out horizontally with overlap + parallax
+const PROCORE_DEVICE_IMAGES = {
+  ipad: '/procore-ipad.png',
+  desktop: '/procore-desktop.png',
+  laptop: '/procore-laptop.png',
+  phone: '/procore-phone.png',
+} as const
+
+function DeviceStackHero({
+  scrollTargetRef,
+}: {
+  scrollTargetRef?: RefObject<HTMLElement | null>
+}) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  // Tie scroll progress to the article so parallax runs over the whole Procore block scroll
+  const { scrollYProgress } = useScroll({
+    target: (scrollTargetRef ?? containerRef) as RefObject<HTMLElement>,
+    offset: ['start end', 'end start'],
+  })
+  // Parallax: base row motion; each device has different amplitude = different "depth" speed
+  const y = useTransform(scrollYProgress, [0, 0.5, 1], [112, 0, -112])
+  // Desktop (behind): scrolls slowest — minimal amplitude
+  const desktopY = useTransform(scrollYProgress, (v) => (0.5 - v) * 6) // ±3px
+  // iPad & Laptop: same speed (middle layer)
+  const ipadY = useTransform(scrollYProgress, (v) => (0.5 - v) * 90) // ±45px
+  const laptopY = useTransform(scrollYProgress, (v) => (0.5 - v) * 90)
+  // Phone (front): scrolls fastest — largest amplitude
+  const phoneY = useTransform(scrollYProgress, (v) => (0.5 - v) * 250) // ±125px
+
+  return (
+    <div
+      ref={containerRef}
+      className="w-screen max-w-none ml-[calc(50%-50vw)] aspect-[16/9] md:aspect-[21/9] bg-dark box-content flex items-center justify-center overflow-hidden transition-colors duration-300"
+      style={{ minHeight: 'min(420px, 50vh)' }}
+    >
+      <motion.div
+        className="w-full h-full flex items-end justify-start gap-0 px-5 md:px-10 min-[1550px]:pl-[70px] min-[1620px]:pl-[120px]"
+        style={{ y }}
+      >
+        {/* Left→right: iPad (back), Desktop, Laptop, Phone (front). Reference: iPad behind desktop; desktop largest; laptop base lower; phone elevated. */}
+        <motion.div
+          className="relative flex-shrink-0 flex items-end justify-center"
+          style={{
+            width: 'clamp(260px, 24vw, 360px)',
+            height: 'min(100%, 62vh)',
+            zIndex: 2,
+            y: ipadY,
+          }}
+        >
+          <div className="relative z-10">
+            <Image
+              src={PROCORE_DEVICE_IMAGES.ipad}
+              alt="Procore on iPad"
+              width={340}
+              height={255}
+              className="object-contain object-bottom w-full h-full"
+              sizes="720px"
+              quality={95}
+            />
+          </div>
+          {/* Shadow layer: centered on image (same aspect + bottom align as image), scrolls with it */}
+          <div
+            className="absolute bottom-0 left-0 right-0 w-full max-h-full aspect-[340/255] flex items-center justify-center pointer-events-none z-0"
+            aria-hidden
+          >
+            <div
+              className="w-[90px] h-[175px] bg-red-500 shrink-0"
+              style={{ boxShadow: '70px 0px 50px 40px rgba(0, 0, 0, 0.5)' }}
+            />
+          </div>
+        </motion.div>
+        <motion.div
+          className="relative flex-shrink-0 flex items-end justify-center max-md:min-w-[500px]"
+          style={{
+            width: 'clamp(320px, 48vw, 700px)',
+            height: 'min(100%, 76vh)',
+            zIndex: 1,
+            y: desktopY,
+            marginLeft: 'calc(clamp(-32px, -6vw, -64px) - 80px)',
+          }}
+        >
+          <Image
+            src={PROCORE_DEVICE_IMAGES.desktop}
+            alt="Procore on desktop"
+            width={700}
+            height={441}
+            className="object-contain object-bottom w-full h-full"
+            sizes="1400px"
+            quality={95}
+          />
+        </motion.div>
+        <motion.div
+          className="relative flex-shrink-0 flex items-end justify-center max-md:hidden"
+          style={{
+            width: 'clamp(320px, 40vw, 600px)',
+            height: 'min(100%, 70vh)',
+            zIndex: 3,
+            y: laptopY,
+            marginLeft: '-145px',
+          }}
+        >
+          <div className="relative z-10">
+            <Image
+              src={PROCORE_DEVICE_IMAGES.laptop}
+              alt="Procore on laptop"
+              width={600}
+              height={388}
+              className="object-contain object-bottom w-full h-full"
+              sizes="1200px"
+              quality={95}
+            />
+          </div>
+          {/* Shadow layer: same red box on top of laptop */}
+          <div
+            className="absolute bottom-0 left-0 right-0 w-full max-h-full aspect-[600/388] flex items-center justify-center pointer-events-none z-0"
+            aria-hidden
+          >
+            <div
+              className="w-[90px] h-[175px] bg-red-500 shrink-0"
+              style={{ boxShadow: '-130px 0px 50px 40px rgba(0, 0, 0, 0.5)' }}
+            />
+          </div>
+        </motion.div>
+        <motion.div
+          className="relative flex-shrink-0 flex items-end justify-center ml-auto max-lg:hidden"
+          style={{
+            width: 'clamp(72px, 10vw, 130px)',
+            height: 'min(100%, 50vh)',
+            zIndex: 4,
+            y: phoneY,
+            marginLeft: '-135px',
+          }}
+        >
+          <div className="relative z-10">
+            <Image
+              src={PROCORE_DEVICE_IMAGES.phone}
+              alt="Procore on smartphone"
+              width={130}
+              height={260}
+              className="object-contain object-bottom w-full h-full"
+              sizes="260px"
+              quality={95}
+            />
+          </div>
+          {/* Shadow layer: same red box on top of phone */}
+          <div
+            className="absolute bottom-0 left-0 right-0 w-full max-h-full aspect-[130/260] flex items-center justify-center pointer-events-none z-0"
+            aria-hidden
+          >
+            <div
+              className="w-[90px] h-[175px] bg-red-500 shrink-0"
+              style={{ boxShadow: '3px 0px 30px 40px rgba(0, 0, 0, 0.5)' }}
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+
 function ScrollScaleImage({
   src,
   alt,
@@ -182,7 +342,7 @@ function ScrollScaleImage({
             alt={alt}
             fill
             sizes="100vw"
-            quality={90}
+            quality={95}
             className={`object-center box-content border border-black ${imageCover ? 'object-cover' : 'object-contain'}`}
           />
         </div>
@@ -193,6 +353,7 @@ function ScrollScaleImage({
 
 export default function SelectedWork() {
   const userFlowRef = useRef<HTMLElement>(null)
+  const procoreArticleRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
     target: userFlowRef,
     // Vertical stagger + horizontal sweep run over this range
@@ -226,7 +387,13 @@ export default function SelectedWork() {
       {workItems.map((item, index) => (
         <motion.article
           key={item.title}
-          ref={item.title === 'Get Sh!t Done' ? userFlowRef : undefined}
+          ref={
+            item.title === 'Get Sh!t Done'
+              ? userFlowRef
+              : item.title === 'Procore Construction Network'
+                ? procoreArticleRef
+                : undefined
+          }
           initial={{ opacity: 0.3, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -289,8 +456,8 @@ export default function SelectedWork() {
                     src="/Toro-TMS.png?v=2"
                     alt="Toro TMS Embedded Design — dispatch dashboard and recurring event mobile experience"
                     fill
-                    sizes="(min-width: 1024px) 700px, 100vw"
-                    quality={90}
+                    sizes="(min-width: 1024px) 1400px, 100vw"
+                    quality={95}
                     className="object-cover object-left"
                   />
                 </div>
@@ -318,13 +485,13 @@ export default function SelectedWork() {
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
                   >
-                    <img src="/user-flow-phone-1.png" alt="Get Sh!t Done app navigation menu" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-1.png" alt="Get Sh!t Done app navigation menu" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                   <div
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
                   >
-                    <img src="/user-flow-phone-7.png" alt="Get Sh!t Done dark mode navigation" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-7.png" alt="Get Sh!t Done dark mode navigation" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                 </motion.div>
                 {/* Column 2 container — even: moves down along -6.5° */}
@@ -333,13 +500,13 @@ export default function SelectedWork() {
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
                   >
-                    <img src="/user-flow-phone-2.png" alt="Get Sh!t Done today to do list view" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-2.png" alt="Get Sh!t Done today to do list view" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                   <div
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
                   >
-                    <img src="/user-flow-phone-8.png" alt="Get Sh!t Done dark mode to do list" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-8.png" alt="Get Sh!t Done dark mode to do list" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                 </motion.div>
                 {/* Column 3 container — odd */}
@@ -348,13 +515,13 @@ export default function SelectedWork() {
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
                   >
-                    <img src="/user-flow-phone-3.png" alt="Get Sh!t Done projects list view" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-3.png" alt="Get Sh!t Done projects list view" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                   <div
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
                   >
-                    <img src="/user-flow-phone-9.png" alt="Get Sh!t Done dark mode projects" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-9.png" alt="Get Sh!t Done dark mode projects" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                 </motion.div>
                 {/* Column 4 container — even */}
@@ -363,13 +530,13 @@ export default function SelectedWork() {
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
                   >
-                    <img src="/user-flow-phone-4.png" alt="Get Sh!t Done new task screen" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-4.png" alt="Get Sh!t Done new task screen" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                   <div
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
                   >
-                    <img src="/user-flow-phone-10.png" alt="Get Sh!t Done dark mode new task" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-10.png" alt="Get Sh!t Done dark mode new task" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                 </motion.div>
                 {/* Column 5 container — odd */}
@@ -378,13 +545,13 @@ export default function SelectedWork() {
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
                   >
-                    <img src="/user-flow-phone-5.png" alt="Get Sh!t Done new task with due date calendar" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-5.png" alt="Get Sh!t Done new task with due date calendar" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                   <div
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
                   >
-                    <img src="/user-flow-phone-11.png" alt="Get Sh!t Done dark mode schedule" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-11.png" alt="Get Sh!t Done dark mode schedule" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                 </motion.div>
                 {/* Column 6 container — even */}
@@ -393,13 +560,13 @@ export default function SelectedWork() {
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
                   >
-                    <img src="/user-flow-phone-6.png" alt="Get Sh!t Done schedule view" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-6.png" alt="Get Sh!t Done schedule view" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                   <div
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
                   >
-                    <img src="/user-flow-phone-12.png" alt="Get Sh!t Done dark mode new task" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-phone-12.png" alt="Get Sh!t Done dark mode new task" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                 </motion.div>
                 {/* Column 7 container — odd: New Project (light + dark) */}
@@ -408,13 +575,13 @@ export default function SelectedWork() {
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
                   >
-                    <img src="/user-flow-new-project-top.png" alt="Get Sh!t Done New Project screen (light)" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-new-project-top.png" alt="Get Sh!t Done New Project screen (light)" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                   <div
                     className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
                     style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
                   >
-                    <img src="/user-flow-new-project-bottom.png" alt="Get Sh!t Done New Project screen (dark)" className="w-full h-full object-cover object-top" />
+                    <Image src="/user-flow-new-project-bottom.png" alt="Get Sh!t Done New Project screen (dark)" fill sizes="444px" quality={95} className="object-cover object-top" />
                   </div>
                 </motion.div>
                 {/* Gradient overlay - fades bottom row into black */}
@@ -429,6 +596,8 @@ export default function SelectedWork() {
             </div>
           ) : item.title === 'Toro TMS' ? (
             <QuoteCarousel quotes={toroQuotes} />
+          ) : item.title === 'Procore Construction Network' ? (
+            <DeviceStackHero scrollTargetRef={procoreArticleRef} />
           ) : (
             <ScrollScaleImage
               src={'image' in item && item.image ? item.image : PCN_IMAGE}

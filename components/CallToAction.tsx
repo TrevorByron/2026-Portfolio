@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Linkedin } from 'lucide-react'
 
@@ -18,11 +19,14 @@ export default function CallToAction() {
           className="text-left mb-16"
         >
           <div className="flex flex-col sm:flex-row items-stretch gap-6">
-            <div className="w-full max-w-[22rem] h-auto rounded-lg overflow-hidden border-2 border-muted-gray flex-shrink-0">
-              <img
+            <div className="relative w-full max-w-[22rem] aspect-square rounded-lg overflow-hidden border-2 border-muted-gray flex-shrink-0">
+              <Image
                 src="/contact-photo.png"
                 alt="Trevor"
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 640px) 100vw, 704px"
+                quality={95}
+                className="object-cover"
               />
             </div>
             <div>
