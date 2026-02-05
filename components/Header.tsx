@@ -30,7 +30,7 @@ export default function Header() {
             alt="Trevor Borden"
             width={48}
             height={48}
-            className="h-12 w-12 object-contain"
+            className="h-14 w-14 md:h-12 md:w-12 object-contain"
             priority
           />
         </Link>
@@ -39,7 +39,7 @@ export default function Header() {
             <a
               key={href}
               href={href}
-              className="font-mono text-sm text-muted-gray transition-colors hover:text-light-gray"
+              className="hidden md:block font-mono text-sm text-muted-gray transition-colors hover:text-light-gray"
             >
               {label}
             </a>
