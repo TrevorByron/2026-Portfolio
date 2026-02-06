@@ -32,7 +32,7 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
           className="text-xl md:text-2xl lg:text-3xl font-semibold text-muted-gray mb-12 text-balance font-mono"
         >
-          I'm a freelance designer with a particular love for prototyping in code. I bring vague concepts to life and confidence to validation cycles. I'm happy you're here.
+          I&apos;m a freelance designer with a particular love for prototyping in code. I bring vague concepts to life and confidence to validation cycles. I&apos;m happy you&apos;re here.
         </motion.h2>
         
         <motion.p
@@ -42,7 +42,7 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
           className="text-lg md:text-xl text-muted-gray mb-4 max-w-2xl leading-relaxed text-balance"
         >
-          Too many of the best product ideas stall before they're ever tested—stuck in someone's head or buried in slides.
+          Too many of the best product ideas stall before they&apos;re ever tested—stuck in someone&apos;s head or buried in slides.
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -51,7 +51,7 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
           className="text-lg md:text-xl text-muted-gray mb-16 max-w-2xl leading-relaxed text-balance"
         >
-          I use rapid, coded prototyping to bring these ideas to life. Leveraging AI-driven tools, I'm able to move quickly and efficiently. Years of partnering closely with founders and product leaders have shaped how I bring fuzzy ideas into the hands of real humans.
+          I use rapid, coded prototyping to bring these ideas to life. Leveraging AI-driven tools, I&apos;m able to move quickly and efficiently. Years of partnering closely with founders and product leaders have shaped how I bring fuzzy ideas into the hands of real humans.
         </motion.p>
         
         <motion.div

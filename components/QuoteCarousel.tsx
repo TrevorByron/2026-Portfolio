@@ -59,7 +59,7 @@ function QuoteCard({ item, colorIndex }: { item: QuoteItem; colorIndex: number }
   const rating = item.rating != null ? Math.min(5, Math.max(0, item.rating)) : null
   const { border: borderColor, star: starColor } = FIGMA_HIGHLIGHT_COLORS[colorIndex % FIGMA_HIGHLIGHT_COLORS.length]
   return (
-    <blockquote className={`flex h-[180px] md:h-[225px] min-h-[180px] md:min-h-[225px] w-max min-w-[240px] md:min-w-[280px] max-w-[700px] flex-shrink-0 flex-col overflow-hidden border border-gray-600 border-l-4 ${borderColor} rounded-lg bg-[#0d0d0d] pl-4 pr-4 py-4 md:pl-6 md:pr-6 md:py-8`}>
+    <blockquote className={`flex h-[180px] md:h-[225px] min-h-[180px] md:min-h-[225px] w-max min-w-[240px] md:min-w-[280px] max-w-[380px] md:max-w-[450px] flex-shrink-0 flex-col overflow-hidden border border-gray-600 border-l-4 ${borderColor} rounded-lg bg-[#0d0d0d] pl-4 pr-4 py-4 md:pl-6 md:pr-6 md:py-8`}>
       {rating != null && (
         <div className="flex gap-0.5 mb-2 md:mb-3" aria-label={`${rating} out of 5 stars`}>
           {[1, 2, 3, 4, 5].map((n) => (
@@ -80,11 +80,6 @@ function QuoteCard({ item, colorIndex }: { item: QuoteItem; colorIndex: number }
         <cite className="font-mono text-xs md:text-sm font-medium text-light-gray not-italic">
           {item.attribution}
         </cite>
-        {item.role && (
-          <span className="font-mono text-xs md:text-sm text-gray-500">
-            {item.role}
-          </span>
-        )}
         {item.date && (
           <span className="font-mono text-xs md:text-sm text-gray-500">
             {item.date}
@@ -103,7 +98,7 @@ export default function QuoteCarousel({ quotes }: QuoteCarouselProps) {
   return (
     <div className="w-full pb-4">
       <p className="text-lg font-bold font-mono uppercase text-gray-500 mb-8 max-w-6xl mx-auto">
-        How my design impacted Toro's reputation
+        How my design impacted Toro&apos;s reputation
       </p>
       <div className="w-screen max-w-none ml-[calc(50%-50vw)] relative overflow-hidden">
         <div

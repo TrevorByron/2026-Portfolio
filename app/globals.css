@@ -28,4 +28,11 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Speed up ticker scroll animation on mobile */
+  @media (max-width: 767px) {
+    .animate-ticker-scroll {
+      animation-duration: 45s;
+    }
+  }
 }

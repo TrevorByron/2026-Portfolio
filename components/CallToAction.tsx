@@ -31,10 +31,10 @@ export default function CallToAction() {
             </div>
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 font-mono">
-                Let's Build Something
+                Let&apos;s Build Something
               </h2>
               <p className="text-lg md:text-xl text-muted-gray leading-relaxed">
-                Have a project in mind? Let's start a conversation about how we can work together. The best way to connect is via{' '}
+                Have a project in mind? Let&apos;s start a conversation about how we can work together. The best way to connect is via{' '}
                 <a
                   href="https://www.linkedin.com/in/trevor-byron/"
                   target="_blank"

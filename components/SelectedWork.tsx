@@ -128,11 +128,11 @@ const workItems = [
     workStyle: 'embedded' as const,
     description: (
       <>
-        I was responsible for the front-office product experience at Toro TMS over a 4.5 year contract, partnering closely with founders, product, and engineering from the company's earliest days through meaningful scale. During that time, <span className="text-figma-green">Toro grew from $0 to $10M in ARR</span>.
+        I was responsible for the front-office product experience at Toro TMS over a 4.5 year contract, partnering closely with founders, product, and engineering from the company&apos;s earliest days through meaningful scale. During that time, <span className="text-figma-green">Toro grew from $0 to $10M in ARR</span>.
         <br /><br />
-        I designed many of the platform's most widely adopted features—work that was consistently cited by customers as a primary reason for choosing Toro. I extended beyond feature design to define the product's foundational interaction patterns, establish the initial design system, and ensure design decisions scaled as the product and customer base grew.
+        I designed many of the platform&apos;s most widely adopted features—work that was consistently cited by customers as a primary reason for choosing Toro. I extended beyond feature design to define the product&apos;s foundational interaction patterns, establish the initial design system, and ensure design decisions scaled as the product and customer base grew.
         <br /><br />
-        In addition to the core product, I designed and built Toro's first marketing website, shaping how the company presented itself to the market and supporting early customer acquisition. Throughout the engagement, I took responsibility not just for design direction, but for the quality of what actually shipped—working closely with engineering to ensure the front-end experience matched intent, behavior, and business needs.
+        In addition to the core product, I designed and built Toro&apos;s first marketing website, shaping how the company presented itself to the market and supporting early customer acquisition. Throughout the engagement, I took responsibility not just for design direction, but for the quality of what actually shipped—working closely with engineering to ensure the front-end experience matched intent, behavior, and business needs.
       </>
     ),
     link: '#',
