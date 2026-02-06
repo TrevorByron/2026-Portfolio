@@ -152,26 +152,50 @@ const PROCORE_DEVICE_IMAGES = {
   phone: '/procore-phone.png',
 } as const
 
+// Vertical-only scroll motion for Procore (no 6.5° tilt). Lower speed = slower; higher = faster.
+const PROCORE_OFFSET = 80
+
+// Order: desktop slowest → laptop → ipad (second fastest) → phone fastest
+const DEFAULT_DEVICE_SPEEDS = {
+  desktop: 0.05,
+  laptop: 0.3,
+  ipad: 1.1,
+  phone: 1.5,
+} as const
+
+type DeviceSpeeds = Partial<Record<keyof typeof PROCORE_DEVICE_IMAGES, number>>
+type DeviceDirections = Partial<Record<keyof typeof PROCORE_DEVICE_IMAGES, 1 | -1>>
+
 function DeviceStackHero({
   scrollTargetRef,
+  deviceSpeeds,
+  deviceDirections,
 }: {
   scrollTargetRef?: RefObject<HTMLElement | null>
+  deviceSpeeds?: DeviceSpeeds
+  deviceDirections?: DeviceDirections
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
-  // Tie scroll progress to the article so parallax runs over the whole Procore block scroll
   const { scrollYProgress } = useScroll({
     target: (scrollTargetRef ?? containerRef) as RefObject<HTMLElement>,
-    offset: ['start end', 'end start'],
+    offset: ['start 0.5', 'end -0.50'],
   })
-  // Parallax: base row motion; each device has different amplitude = different "depth" speed
-  const y = useTransform(scrollYProgress, [0, 0.5, 1], [112, 0, -112])
-  // Desktop (behind): scrolls slowest — minimal amplitude
-  const desktopY = useTransform(scrollYProgress, (v) => (0.5 - v) * 18) // ±9px
-  // iPad & Laptop: same speed (middle layer)
-  const ipadY = useTransform(scrollYProgress, (v) => (0.5 - v) * 270) // ±135px
-  const laptopY = useTransform(scrollYProgress, (v) => (0.5 - v) * 270)
-  // Phone (front): scrolls fastest — largest amplitude
-  const phoneY = useTransform(scrollYProgress, (v) => (0.5 - v) * 750) // ±375px
+  const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
+  const progress = useTransform(scrollYProgress, (v) => easeOutCubic(v))
+
+  const speedIpad = deviceSpeeds?.ipad ?? DEFAULT_DEVICE_SPEEDS.ipad
+  const speedDesktop = deviceSpeeds?.desktop ?? DEFAULT_DEVICE_SPEEDS.desktop
+  const speedLaptop = deviceSpeeds?.laptop ?? DEFAULT_DEVICE_SPEEDS.laptop
+  const speedPhone = deviceSpeeds?.phone ?? DEFAULT_DEVICE_SPEEDS.phone
+  const dirIpad = deviceDirections?.ipad ?? 1
+  const dirDesktop = deviceDirections?.desktop ?? 1
+  const dirLaptop = deviceDirections?.laptop ?? 1
+  const dirPhone = deviceDirections?.phone ?? 1
+
+  const ipadY = useTransform(progress, (v) => -v * PROCORE_OFFSET * speedIpad * dirIpad)
+  const desktopY = useTransform(progress, (v) => -v * PROCORE_OFFSET * speedDesktop * dirDesktop)
+  const laptopY = useTransform(progress, (v) => -v * PROCORE_OFFSET * speedLaptop * dirLaptop)
+  const phoneY = useTransform(progress, (v) => -v * PROCORE_OFFSET * speedPhone * dirPhone)
 
   return (
     <div
@@ -181,14 +205,12 @@ function DeviceStackHero({
     >
       <motion.div
         className="w-full h-full flex items-end justify-start gap-0 px-5 md:px-10 min-[1550px]:pl-[70px] min-[1620px]:pl-[120px] overflow-visible"
-        style={{ y }}
       >
         {/* Left→right: iPad (back), Desktop, Laptop, Phone (front). Reference: iPad behind desktop; desktop largest; laptop base lower; phone elevated. */}
         <motion.div
-          className="relative flex-shrink-0 flex items-end justify-center"
+          className="relative flex-shrink-0 flex items-end justify-center h-full"
           style={{
             width: 'clamp(260px, 24vw, 360px)',
-            height: 'min(100%, 62vh)',
             zIndex: 2,
             y: ipadY,
           }}
@@ -215,12 +237,11 @@ function DeviceStackHero({
             />
           </div>
         </motion.div>
-        <div className="max-[480px]:-ml-[90px]">
+        <div className="h-full max-[480px]:-ml-[90px]">
           <motion.div
-            className="relative flex-shrink-0 flex items-end justify-center max-md:min-w-[500px]"
+            className="relative flex-shrink-0 flex items-end justify-center h-full max-md:min-w-[500px]"
             style={{
               width: 'clamp(320px, 48vw, 700px)',
-              height: 'min(100%, 76vh)',
               zIndex: 1,
               y: desktopY,
               marginLeft: 'calc(clamp(-32px, -6vw, -64px) - 80px)',
@@ -238,10 +259,9 @@ function DeviceStackHero({
           </motion.div>
         </div>
         <motion.div
-          className="relative flex-shrink-0 flex items-end justify-center max-md:hidden"
+          className="relative flex-shrink-0 flex items-end justify-center h-full max-md:hidden"
           style={{
             width: 'clamp(320px, 40vw, 600px)',
-            height: 'min(100%, 70vh)',
             zIndex: 3,
             y: laptopY,
             marginLeft: '-145px',
@@ -270,10 +290,9 @@ function DeviceStackHero({
           </div>
         </motion.div>
         <motion.div
-          className="relative flex-shrink-0 flex items-end justify-center ml-auto max-lg:hidden"
+          className="relative flex-shrink-0 flex items-end justify-center h-full ml-auto max-lg:hidden"
           style={{
             width: 'clamp(72px, 10vw, 130px)',
-            height: 'min(100%, 50vh)',
             zIndex: 4,
             y: phoneY,
             marginLeft: '-135px',
