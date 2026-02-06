@@ -178,7 +178,7 @@ function DeviceStackHero({
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: (scrollTargetRef ?? containerRef) as RefObject<HTMLElement>,
-    offset: ['start 0.5', 'end -0.50'],
+    offset: ['end end', 'end start'],
   })
   const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
   const progress = useTransform(scrollYProgress, (v) => easeOutCubic(v))
