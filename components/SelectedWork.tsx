@@ -167,17 +167,17 @@ type DeviceSpeeds = Partial<Record<keyof typeof PROCORE_DEVICE_IMAGES, number>>
 type DeviceDirections = Partial<Record<keyof typeof PROCORE_DEVICE_IMAGES, 1 | -1>>
 
 function DeviceStackHero({
-  scrollTargetRef,
   deviceSpeeds,
   deviceDirections,
 }: {
-  scrollTargetRef?: RefObject<HTMLElement | null>
   deviceSpeeds?: DeviceSpeeds
   deviceDirections?: DeviceDirections
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
+  // Use containerRef (this component's root) as target so ref is always available after mount.
+  // Using the parent's ref (article) can be null in production when useScroll runs (hydration/commit order).
   const { scrollYProgress } = useScroll({
-    target: (scrollTargetRef ?? containerRef) as RefObject<HTMLElement>,
+    target: containerRef,
     offset: ['end end', 'end start'],
   })
   const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
@@ -618,7 +618,7 @@ export default function SelectedWork() {
           ) : item.title === 'Toro TMS' ? (
             <QuoteCarousel quotes={toroQuotes} />
           ) : item.title === 'Procore Construction Network' ? (
-            <DeviceStackHero scrollTargetRef={procoreArticleRef} />
+            <DeviceStackHero />
           ) : (
             <ScrollScaleImage
               src={'image' in item && item.image ? item.image : PCN_IMAGE}
