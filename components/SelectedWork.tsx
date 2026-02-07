@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, type RefObject } from 'react'
+import { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Zap, PenTool } from 'lucide-react'
@@ -143,6 +143,104 @@ const workItems = [
 const UP_X = Math.sin((-6.5 * Math.PI) / 180)   // ≈ -0.1132
 const UP_Y = -Math.cos((6.5 * Math.PI) / 180)   // ≈ -0.994
 const OFFSET = 80 // px along the tilted axis at end; start is 0
+
+// Get Sh!t Done: phone column stagger + horizontal sweep. Own ref so useScroll target is always mounted.
+function UserFlowPhones() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  })
+  const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
+  const oddX = useTransform(scrollYProgress, (v) => easeOutCubic(v) * UP_X * OFFSET)
+  const oddY = useTransform(scrollYProgress, (v) => easeOutCubic(v) * UP_Y * OFFSET)
+  const evenX = useTransform(scrollYProgress, (v) => easeOutCubic(v) * -UP_X * OFFSET)
+  const evenY = useTransform(scrollYProgress, (v) => easeOutCubic(v) * -UP_Y * OFFSET)
+  const rowX = useTransform(scrollYProgress, (v) => easeOutCubic(v) * -200)
+  const oddColumnX = useTransform([oddX, rowX], ([ox, rx]: number[]) => ox + rx)
+  const evenColumnX = useTransform([evenX, rowX], ([ex, rx]: number[]) => ex + rx)
+
+  return (
+    <div
+      ref={containerRef}
+      className="w-screen max-w-none ml-[calc(50%-50vw)] bg-dark box-content overflow-hidden transition-colors duration-300"
+      style={{ minHeight: 'calc(979px / 0.85 + 124px)' }}
+    >
+      <div className="relative w-full min-h-[calc(979px/0.85+124px)] flex items-center justify-center overflow-hidden">
+        <div
+          className="absolute inset-0 pt-[24px] pb-[100px] min-[1700px]:translate-x-[calc(42vw-716px)]"
+          style={{
+            maskImage: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 100%)',
+            WebkitMaskImage: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 100%)',
+          }}
+        >
+          <motion.div className="absolute w-[222px] h-[979px]" style={{ left: '8%', top: '5%', zIndex: 6, rotate: -6.5, x: oddColumnX, y: oddY }}>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}>
+              <Image src="/user-flow-phone-1.png" alt="Get Sh!t Done app navigation menu" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}>
+              <Image src="/user-flow-phone-7.png" alt="Get Sh!t Done dark mode navigation" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+          </motion.div>
+          <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 242px)', top: '5%', zIndex: 5, rotate: -6.5, x: evenColumnX, y: evenY }}>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}>
+              <Image src="/user-flow-phone-2.png" alt="Get Sh!t Done today to do list view" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}>
+              <Image src="/user-flow-phone-8.png" alt="Get Sh!t Done dark mode to do list" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+          </motion.div>
+          <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 484px)', top: '5%', zIndex: 4, rotate: -6.5, x: oddColumnX, y: oddY }}>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}>
+              <Image src="/user-flow-phone-3.png" alt="Get Sh!t Done projects list view" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}>
+              <Image src="/user-flow-phone-9.png" alt="Get Sh!t Done dark mode projects" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+          </motion.div>
+          <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 726px)', top: '5%', zIndex: 3, rotate: -6.5, x: evenColumnX, y: evenY }}>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}>
+              <Image src="/user-flow-phone-4.png" alt="Get Sh!t Done new task screen" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}>
+              <Image src="/user-flow-phone-10.png" alt="Get Sh!t Done dark mode new task" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+          </motion.div>
+          <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 968px)', top: '5%', zIndex: 2, rotate: -6.5, x: oddColumnX, y: oddY }}>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}>
+              <Image src="/user-flow-phone-5.png" alt="Get Sh!t Done new task with due date calendar" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}>
+              <Image src="/user-flow-phone-11.png" alt="Get Sh!t Done dark mode schedule" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+          </motion.div>
+          <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 1210px)', top: '5%', zIndex: 1, rotate: -6.5, x: evenColumnX, y: evenY }}>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}>
+              <Image src="/user-flow-phone-6.png" alt="Get Sh!t Done schedule view" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}>
+              <Image src="/user-flow-phone-12.png" alt="Get Sh!t Done dark mode new task" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+          </motion.div>
+          <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 1452px)', top: '5%', zIndex: 0, rotate: -6.5, x: oddColumnX, y: oddY }}>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}>
+              <Image src="/user-flow-new-project-top.png" alt="Get Sh!t Done New Project screen (light)" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+            <div className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden" style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}>
+              <Image src="/user-flow-new-project-bottom.png" alt="Get Sh!t Done New Project screen (dark)" fill sizes="444px" quality={95} className="object-cover object-top" />
+            </div>
+          </motion.div>
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.7) 80%, rgba(0, 0, 0, 1) 100%)',
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
 
 // Procore device stack: four images laid out horizontally with overlap + parallax
 const PROCORE_DEVICE_IMAGES = {
@@ -373,26 +471,26 @@ function ScrollScaleImage({
 }
 
 export default function SelectedWork() {
-  const userFlowRef = useRef<HTMLElement>(null)
   const procoreArticleRef = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: userFlowRef,
-    // Vertical stagger + horizontal sweep run over this range
-    offset: ['start 0.5', 'end -0.50'],
-  })
-  const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
-  // Vertical stagger along -6.5° (odd up, even down)
-  const oddX = useTransform(scrollYProgress, (v) => easeOutCubic(v) * UP_X * OFFSET)
-  const oddY = useTransform(scrollYProgress, (v) => easeOutCubic(v) * UP_Y * OFFSET)
-  const evenX = useTransform(scrollYProgress, (v) => easeOutCubic(v) * -UP_X * OFFSET)
-  const evenY = useTransform(scrollYProgress, (v) => easeOutCubic(v) * -UP_Y * OFFSET)
-  // All columns move right-to-left by 200px over the same scroll range
-  const rowX = useTransform(scrollYProgress, (v) => easeOutCubic(v) * -200)
-  const oddColumnX = useTransform([oddX, rowX], ([ox, rx]: number[]) => ox + rx)
-  const evenColumnX = useTransform([evenX, rowX], ([ex, rx]: number[]) => ex + rx)
 
   return (
-    <section id="recent-work" className="px-6 md:px-12 lg:px-24 py-24 bg-black">
+    <section id="recent-work" className="relative px-6 md:px-12 lg:px-24 pt-24 pb-[200px] bg-black">
+      {/* Fade in from section above */}
+      <div
+        className="absolute top-0 left-0 right-0 h-24 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, #000000, transparent)',
+        }}
+        aria-hidden
+      />
+      {/* Soft gradient at bottom to blend into contact section */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to top, #000000, transparent)',
+        }}
+        aria-hidden
+      />
       <div className="max-w-6xl mx-auto mb-20">
         <motion.h4
           initial={{ opacity: 0.4, y: 8 }}
@@ -408,13 +506,7 @@ export default function SelectedWork() {
       {workItems.map((item, index) => (
         <motion.article
           key={item.title}
-          ref={
-            item.title === 'Get Sh!t Done'
-              ? userFlowRef
-              : item.title === 'Procore Construction Network'
-                ? procoreArticleRef
-                : undefined
-          }
+          ref={item.title === 'Procore Construction Network' ? procoreArticleRef : undefined}
           initial={{ opacity: 0.3, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -488,133 +580,7 @@ export default function SelectedWork() {
 
           {/* Full-width image or mobile screenshots (User Flow) — breaks out of section padding */}
           {item.title === 'Get Sh!t Done' ? (
-            <div
-              className="w-screen max-w-none ml-[calc(50%-50vw)] bg-dark box-content overflow-hidden transition-colors duration-300"
-              style={{ minHeight: 'calc(979px / 0.85 + 124px)' }}
-            >
-              <div className="relative w-full min-h-[calc(979px/0.85+124px)] flex items-center justify-center overflow-hidden">
-                <div
-                  className="absolute inset-0 pt-[24px] pb-[100px] min-[1700px]:translate-x-[calc(42vw-716px)]"
-                  style={{
-                    maskImage: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 100%)',
-                    WebkitMaskImage: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 100%)',
-                  }}
-                >
-                {/* Column 1 container — odd: moves up along -6.5° */}
-                <motion.div className="absolute w-[222px] h-[979px]" style={{ left: '8%', top: '5%', zIndex: 6, rotate: -6.5, x: oddColumnX, y: oddY }}>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
-                  >
-                    <Image src="/user-flow-phone-1.png" alt="Get Sh!t Done app navigation menu" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
-                  >
-                    <Image src="/user-flow-phone-7.png" alt="Get Sh!t Done dark mode navigation" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                </motion.div>
-                {/* Column 2 container — even: moves down along -6.5° */}
-                <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 242px)', top: '5%', zIndex: 5, rotate: -6.5, x: evenColumnX, y: evenY }}>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
-                  >
-                    <Image src="/user-flow-phone-2.png" alt="Get Sh!t Done today to do list view" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
-                  >
-                    <Image src="/user-flow-phone-8.png" alt="Get Sh!t Done dark mode to do list" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                </motion.div>
-                {/* Column 3 container — odd */}
-                <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 484px)', top: '5%', zIndex: 4, rotate: -6.5, x: oddColumnX, y: oddY }}>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
-                  >
-                    <Image src="/user-flow-phone-3.png" alt="Get Sh!t Done projects list view" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
-                  >
-                    <Image src="/user-flow-phone-9.png" alt="Get Sh!t Done dark mode projects" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                </motion.div>
-                {/* Column 4 container — even */}
-                <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 726px)', top: '5%', zIndex: 3, rotate: -6.5, x: evenColumnX, y: evenY }}>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
-                  >
-                    <Image src="/user-flow-phone-4.png" alt="Get Sh!t Done new task screen" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
-                  >
-                    <Image src="/user-flow-phone-10.png" alt="Get Sh!t Done dark mode new task" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                </motion.div>
-                {/* Column 5 container — odd */}
-                <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 968px)', top: '5%', zIndex: 2, rotate: -6.5, x: oddColumnX, y: oddY }}>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
-                  >
-                    <Image src="/user-flow-phone-5.png" alt="Get Sh!t Done new task with due date calendar" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
-                  >
-                    <Image src="/user-flow-phone-11.png" alt="Get Sh!t Done dark mode schedule" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                </motion.div>
-                {/* Column 6 container — even */}
-                <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 1210px)', top: '5%', zIndex: 1, rotate: -6.5, x: evenColumnX, y: evenY }}>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
-                  >
-                    <Image src="/user-flow-phone-6.png" alt="Get Sh!t Done schedule view" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
-                  >
-                    <Image src="/user-flow-phone-12.png" alt="Get Sh!t Done dark mode new task" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                </motion.div>
-                {/* Column 7 container — odd: New Project (light + dark) */}
-                <motion.div className="absolute w-[222px] h-[979px]" style={{ left: 'calc(8% + 1452px)', top: '5%', zIndex: 0, rotate: -6.5, x: oddColumnX, y: oddY }}>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 0 }}
-                  >
-                    <Image src="/user-flow-new-project-top.png" alt="Get Sh!t Done New Project screen (light)" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                  <div
-                    className="absolute rounded-[20px] border-2 border-gray-600 bg-dark-gray shadow-xl overflow-hidden"
-                    style={{ width: 222, aspectRatio: '9 / 19.5', left: 0, top: 498 }}
-                  >
-                    <Image src="/user-flow-new-project-bottom.png" alt="Get Sh!t Done New Project screen (dark)" fill sizes="444px" quality={95} className="object-cover object-top" />
-                  </div>
-                </motion.div>
-                {/* Gradient overlay - fades bottom row into black */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: 'linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.7) 80%, rgba(0, 0, 0, 1) 100%)',
-                  }}
-                />
-                </div>
-              </div>
-            </div>
+            <UserFlowPhones />
           ) : item.title === 'Toro TMS' ? (
             <QuoteCarousel quotes={toroQuotes} />
           ) : item.title === 'Procore Construction Network' ? (

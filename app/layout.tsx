@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
+import ScrollBackground from '@/components/ScrollBackground'
 
 export const metadata: Metadata = {
   title: 'Design Engineer',
@@ -15,8 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
+        <ScrollBackground />
+        <div className="relative z-10">
+          <Header />
+          {children}
+        </div>
       </body>
     </html>
   )

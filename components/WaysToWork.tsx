@@ -28,7 +28,7 @@ export default function WaysToWork() {
   return (
     <motion.section
       id="how-i-work"
-      className="px-6 md:px-12 lg:px-24 py-24"
+      className="relative px-6 md:px-12 lg:px-[96px] pt-24 pb-24"
       initial={{ opacity: 0.4, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -81,6 +81,14 @@ export default function WaysToWork() {
           })}
         </div>
       </div>
+      {/* Fade into next section */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, transparent, #000000)',
+        }}
+        aria-hidden
+      />
     </motion.section>
   )
 }

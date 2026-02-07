@@ -24,6 +24,26 @@
   }
 }
 
+/* Subtle scroll-driven background sweep: gradient position tied to scroll progress.
+   Overlay sits above body bg but below content (see layout wrapper). */
+.scroll-bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(24, 20, 36, 0.35) 20%,
+    rgba(16, 18, 28, 0.3) 50%,
+    rgba(24, 20, 36, 0.35) 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-position: calc(var(--scroll-progress, 0) * 100%) 0;
+  background-repeat: no-repeat;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
